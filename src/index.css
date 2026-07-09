@@ -1,8 +1,8 @@
 :root {
-  --color-bg: #fefff3;
-  --color-bg-header: #fefff5;
-  --color-bg-footer: #eeefde;
-  --color-card: #fefff3;
+  --color-bg: #ffffff;
+  --color-bg-header: #ffffff;
+  --color-bg-footer: #ffffff;
+  --color-card: #ffffff;
   --color-border: #eeefde;
   --color-border-featured: #d8cd64;
   --color-text: #333;
@@ -423,6 +423,95 @@ ul {
   gap: 8px;
 }
 
+/* Top Cards Mobile */
+.top-cards-mobile {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 24px;
+}
+
+.top-cards-mobile__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 calc(-1 * var(--page-padding));
+  padding: 0 var(--page-padding);
+}
+
+.top-cards-mobile__track::-webkit-scrollbar {
+  display: none;
+}
+
+.top-cards-mobile__card {
+  flex: 0 0 min(300px, calc(100vw - var(--page-padding) * 2 - 32px));
+  scroll-snap-align: start;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-cards-mobile__card--featured {
+  border-color: var(--color-cta);
+}
+
+.top-cards-mobile__name {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-text);
+}
+
+.top-cards-mobile__offer {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--color-text-caption);
+}
+
+.top-cards-mobile__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  min-height: 56px;
+}
+
+.top-cards-mobile__logo-wrap {
+  width: 96px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.top-cards-mobile__logo {
+  max-height: 44px;
+  max-width: 96px;
+  object-fit: contain;
+}
+
+.top-cards-mobile__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.top-cards-mobile__link {
+  white-space: nowrap;
+}
+
 /* Main Content Layout */
 .main-content {
   max-width: var(--content-max-width);
@@ -466,20 +555,22 @@ ul {
   gap: 24px;
 }
 
-.ranking-card__left {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  flex: 1;
-  min-width: 0;
-}
-
-.ranking-card__brand {
+.ranking-card__start {
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 171px;
   flex-shrink: 0;
+}
+
+.ranking-card__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ranking-card__rating--header {
+  display: none;
 }
 
 .ranking-card__rank {
@@ -794,6 +885,46 @@ ul {
 }
 
 /* Responsive */
+@media (min-width: 901px) {
+  .top-cards {
+    display: block;
+  }
+
+  .top-cards-mobile {
+    display: none;
+  }
+
+  .ranking-card__inner {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .ranking-card__start {
+    width: 171px;
+  }
+
+  .ranking-card__identity {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ranking-card__rating--header {
+    display: none;
+  }
+
+  .ranking-card__rating--cta {
+    display: flex;
+  }
+
+  .ranking-card__details {
+    flex: 1;
+  }
+
+  .ranking-card__cta {
+    width: 220px;
+  }
+}
+
 @media (max-width: 1200px) {
   :root {
     --page-padding: 40px;
@@ -815,7 +946,11 @@ ul {
 
 @media (max-width: 900px) {
   .top-cards {
-    display: none;
+    display: none !important;
+  }
+
+  .top-cards-mobile {
+    display: block;
   }
 
   .main-content {
@@ -846,7 +981,17 @@ ul {
   }
 
   .ranking-card {
-    padding: 16px;
+    padding: 20px;
+    border-width: 1px;
+    border-radius: 10px;
+  }
+
+  .ranking-card--most-popular {
+    border-color: var(--color-cta);
+  }
+
+  .ranking-card--best-fitness {
+    border-color: var(--color-badge-fitness);
   }
 
   .ranking-card__inner {
@@ -855,39 +1000,84 @@ ul {
     gap: 16px;
   }
 
-  .ranking-card__left {
-    flex-direction: column;
-    align-items: flex-start;
+  .ranking-card__start {
+    width: 100%;
     gap: 16px;
   }
 
-  .ranking-card__brand {
-    width: 100%;
+  .ranking-card__badge {
+    margin-bottom: 0;
+  }
+
+  .ranking-card__identity {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
   }
 
   .ranking-card__rank {
-    font-size: 40px;
+    font-size: 48px;
     line-height: 1;
-    min-width: 40px;
+    min-width: 36px;
+    flex-shrink: 0;
   }
 
   .ranking-card__logo-wrap {
-    height: auto;
     flex: 1;
+    height: auto;
+    justify-content: center;
+    min-width: 0;
   }
 
   .ranking-card__logo {
-    max-height: 44px;
-    max-width: 140px;
+    max-height: 40px;
+    max-width: 130px;
+  }
+
+  .ranking-card__rating--header {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .ranking-card__rating--header .rating--lg .rating__value {
+    font-size: 24px;
+    line-height: 30px;
+    width: auto;
+  }
+
+  .ranking-card__rating--cta {
+    display: none;
+  }
+
+  .ranking-card__details {
+    width: 100%;
+  }
+
+  .ranking-card__name {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 12px;
+  }
+
+  .ranking-card__features {
+    gap: 12px;
   }
 
   .ranking-card__cta {
     width: 100%;
-    padding-top: 8px;
-    border-top: 1px solid var(--color-border);
+    padding-top: 0;
+    border-top: none;
+    gap: 12px;
+  }
+
+  .ranking-card__cta .cta-button {
+    width: 100%;
+  }
+
+  .ranking-card__website {
+    font-size: 14px;
+    line-height: 16px;
   }
 
   .promo-banner {
@@ -974,7 +1164,7 @@ ul {
     font-size: 32px;
   }
 
-  .rating--lg .rating__value {
+  .ranking-card__rating--header .rating--lg .rating__value {
     font-size: 28px;
     line-height: 34px;
     width: auto;
