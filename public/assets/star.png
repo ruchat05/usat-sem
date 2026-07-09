@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Star- base" clip-path="url(#clip0_0_66)">
+<path id="Vector" d="M6 1L7.545 4.12671L11 4.63118L8.5 7.06362L9.09 10.5L6 8.87671L2.91 10.5L3.5 7.06362L1 4.63118L4.455 4.12671L6 1Z" fill="var(--fill-0, #D8CD64)" stroke="var(--stroke-0, #D8CD64)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_66">
+<rect width="12" height="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>
