@@ -27,6 +27,10 @@
   --max-width: 1280px;
   --content-max-width: calc(var(--max-width) + 300px + 22px);
   --page-padding: 80px;
+
+  --bp-sidebar-stack: 1200px;
+  --bp-mobile: 900px;
+  --mobile-padding: 16px;
 }
 
 *,
@@ -423,95 +427,6 @@ ul {
   gap: 8px;
 }
 
-/* Top Cards Mobile */
-.top-cards-mobile {
-  display: none;
-  grid-column: 1 / -1;
-  margin-bottom: 24px;
-}
-
-.top-cards-mobile__track {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  margin: 0 calc(-1 * var(--page-padding));
-  padding: 0 var(--page-padding);
-}
-
-.top-cards-mobile__track::-webkit-scrollbar {
-  display: none;
-}
-
-.top-cards-mobile__card {
-  flex: 0 0 min(300px, calc(100vw - var(--page-padding) * 2 - 32px));
-  scroll-snap-align: start;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.top-cards-mobile__card--featured {
-  border-color: var(--color-cta);
-}
-
-.top-cards-mobile__name {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 24px;
-  color: var(--color-text);
-}
-
-.top-cards-mobile__offer {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: var(--color-text-caption);
-}
-
-.top-cards-mobile__footer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-  min-height: 56px;
-}
-
-.top-cards-mobile__logo-wrap {
-  width: 96px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-}
-
-.top-cards-mobile__logo {
-  max-height: 44px;
-  max-width: 96px;
-  object-fit: contain;
-}
-
-.top-cards-mobile__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  min-width: 0;
-}
-
-.top-cards-mobile__link {
-  white-space: nowrap;
-}
-
 /* Main Content Layout */
 .main-content {
   max-width: var(--content-max-width);
@@ -550,12 +465,21 @@ ul {
 
 .ranking-card__inner {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
 }
 
-.ranking-card__start {
+.ranking-card__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ranking-card__brand {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -567,10 +491,6 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.ranking-card__rating--header {
-  display: none;
 }
 
 .ranking-card__rank {
@@ -885,46 +805,6 @@ ul {
 }
 
 /* Responsive */
-@media (min-width: 901px) {
-  .top-cards {
-    display: block;
-  }
-
-  .top-cards-mobile {
-    display: none;
-  }
-
-  .ranking-card__inner {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .ranking-card__start {
-    width: 171px;
-  }
-
-  .ranking-card__identity {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .ranking-card__rating--header {
-    display: none;
-  }
-
-  .ranking-card__rating--cta {
-    display: flex;
-  }
-
-  .ranking-card__details {
-    flex: 1;
-  }
-
-  .ranking-card__cta {
-    width: 220px;
-  }
-}
-
 @media (max-width: 1200px) {
   :root {
     --page-padding: 40px;
@@ -945,139 +825,270 @@ ul {
 }
 
 @media (max-width: 900px) {
-  .top-cards {
-    display: none !important;
+  :root {
+    --page-padding: var(--mobile-padding);
   }
 
-  .top-cards-mobile {
-    display: block;
+  .main-content__layout {
+    min-width: 0;
+    width: 100%;
   }
 
-  .main-content {
-    margin-top: -20px;
-  }
-
-  .hero {
-    min-height: 300px;
-  }
-
-  .hero__content {
-    padding-top: 20px;
-    padding-bottom: 24px;
-  }
-
-  .hero__title {
-    font-size: 32px;
-    line-height: 40px;
-  }
-
-  .hero__subtitle {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .hero__disclosure {
+  .main-content__primary,
+  .rankings,
+  .ranking-card {
+    min-width: 0;
     max-width: 100%;
   }
 
-  .ranking-card {
-    padding: 20px;
+  /* Top Cards — mobile horizontal carousel */
+  .top-cards {
+    position: relative;
+    z-index: 2;
+    grid-column: 1 / -1;
+    margin: -201px calc(-1 * var(--page-padding)) 16px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .top-cards__grid {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    overflow-x: auto;
+    padding: 8px 0 16px 16px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .top-cards__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-card {
+    flex: 0 0 230px;
+    scroll-snap-align: start;
     border-width: 1px;
-    border-radius: 10px;
+    border-color: #e5e5e5;
   }
 
-  .ranking-card--most-popular {
+  .top-card--featured {
+    order: -1;
     border-color: var(--color-cta);
+    background: linear-gradient(180deg, #fff 0%, #f5f5f7 100%);
   }
 
-  .ranking-card--best-fitness {
-    border-color: var(--color-badge-fitness);
+  .top-card__body {
+    gap: 8px;
   }
 
-  .ranking-card__inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
+  .top-card__name {
+    font-size: 18px;
+    line-height: 24px;
   }
 
-  .ranking-card__start {
-    width: 100%;
-    gap: 16px;
-  }
-
-  .ranking-card__badge {
-    margin-bottom: 0;
-  }
-
-  .ranking-card__identity {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  .top-card__footer {
+    min-height: auto;
     gap: 12px;
   }
 
+  .top-card__logo-wrap {
+    flex: 1;
+    width: auto;
+    height: auto;
+    aspect-ratio: 114 / 64;
+  }
+
+  .top-card__actions .rating {
+    gap: 5px;
+  }
+
+  .top-card__link {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .main-content {
+    margin-top: 0;
+    padding-bottom: 48px;
+  }
+
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 400px;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px var(--page-padding) 8px;
+  }
+
+  .hero__text {
+    gap: 8px;
+  }
+
+  .hero__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .hero__subtitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .hero__disclosure {
+    margin-top: 0;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: none;
+  }
+
+  .hero__disclosure p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .hero__bg-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .ranking-card {
+    padding: 8px 8px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .ranking-card--most-popular {
+    border: 1px solid var(--color-cta);
+  }
+
+  .ranking-card__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'badge badge'
+      'identity rating'
+      'details details'
+      'button button'
+      'website website';
+    gap: 16px;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .ranking-card__inner:not(:has(.badge)) {
+    grid-template-areas:
+      'identity rating'
+      'details details'
+      'button button'
+      'website website';
+  }
+
+  .ranking-card__left,
+  .ranking-card__brand,
+  .ranking-card__cta {
+    display: contents;
+  }
+
+  .ranking-card__brand > .badge {
+    grid-area: badge;
+    justify-self: start;
+  }
+
+  .ranking-card--most-popular .ranking-card__brand > .badge {
+    margin-bottom: -12px;
+  }
+
+  .ranking-card--best-fitness .ranking-card__brand > .badge {
+    margin-bottom: -8px;
+  }
+
+  .ranking-card__identity {
+    grid-area: identity;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
   .ranking-card__rank {
-    font-size: 48px;
-    line-height: 1;
-    min-width: 36px;
+    font-size: 40px;
+    line-height: 1.5;
+    min-width: 24px;
     flex-shrink: 0;
   }
 
   .ranking-card__logo-wrap {
     flex: 1;
-    height: auto;
-    justify-content: center;
+    height: 46px;
+    justify-content: flex-start;
     min-width: 0;
   }
 
   .ranking-card__logo {
-    max-height: 40px;
-    max-width: 130px;
+    max-height: 34px;
+    max-width: 110px;
   }
 
-  .ranking-card__rating--header {
-    display: flex;
+  .ranking-card__cta > .rating {
+    grid-area: rating;
     flex-shrink: 0;
+    justify-self: end;
   }
 
-  .ranking-card__rating--header .rating--lg .rating__value {
+  .ranking-card__cta > .rating.rating--lg .rating__value {
     font-size: 24px;
-    line-height: 30px;
+    line-height: 28px;
     width: auto;
   }
 
-  .ranking-card__rating--cta {
-    display: none;
-  }
-
   .ranking-card__details {
+    grid-area: details;
     width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .ranking-card__name {
-    font-size: 20px;
-    line-height: 26px;
-    margin-bottom: 12px;
-  }
-
-  .ranking-card__features {
-    gap: 12px;
-  }
-
-  .ranking-card__cta {
-    width: 100%;
-    padding-top: 0;
-    border-top: none;
-    gap: 12px;
-  }
-
-  .ranking-card__cta .cta-button {
+  .ranking-card__cta > .cta-button {
+    grid-area: button;
     width: 100%;
   }
 
   .ranking-card__website {
-    font-size: 14px;
-    line-height: 16px;
+    grid-area: website;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .ranking-card__name {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 0;
+  }
+
+  .ranking-card__features {
+    gap: 8px;
+  }
+
+  .ranking-card__feature {
+    align-items: center;
+  }
+
+  .ranking-card__feature > span {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   .promo-banner {
@@ -1091,13 +1102,13 @@ ul {
 
   .promo-banner__image {
     width: 100%;
-    height: 160px;
+    height: 188px;
   }
 
   .promo-banner__content {
     flex-direction: column;
     align-items: stretch;
-    padding: 20px;
+    padding: 16px;
     width: 100%;
     gap: 16px;
   }
@@ -1107,8 +1118,18 @@ ul {
     width: 100%;
   }
 
+  .promo-banner__headline {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
   .promo-banner__cta {
     width: 100%;
+  }
+
+  .promo-banner__ad {
+    top: 172px;
+    right: 16px;
   }
 
   .article-section {
@@ -1119,74 +1140,12 @@ ul {
     font-size: 22px;
     line-height: 28px;
   }
-}
 
-@media (max-width: 600px) {
-  :root {
-    --page-padding: 20px;
-  }
-
-  .hero {
-    min-height: 260px;
-  }
-
-  .hero__title {
-    font-size: 28px;
-    line-height: 34px;
-  }
-
-  .hero__subtitle {
-    font-size: 15px;
-    line-height: 22px;
-  }
-
-  .hero__disclosure p {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .main-content {
-    margin-top: -12px;
-    padding-bottom: 48px;
-  }
-
-  .ranking-card__name {
-    font-size: 18px;
-    line-height: 24px;
-  }
-
-  .ranking-card__feature {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .ranking-card__rank {
-    font-size: 32px;
-  }
-
-  .ranking-card__rating--header .rating--lg .rating__value {
-    font-size: 28px;
-    line-height: 34px;
-    width: auto;
-  }
-
-  .article-section__title {
-    font-size: 20px;
-    line-height: 26px;
-  }
-
-  .article-section__paragraph,
-  .article-section__list li {
-    font-size: 15px;
-    line-height: 24px;
-  }
-
-  .promo-banner__headline {
-    font-size: 20px;
-    line-height: 26px;
+  .sidebar__card {
+    padding: 18px 16px;
   }
 
   .footer {
-    padding: 40px 20px;
+    padding: 40px 16px;
   }
 }

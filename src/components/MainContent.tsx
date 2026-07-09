@@ -4,7 +4,6 @@ import { RankingCard } from './RankingCard';
 import { Sidebar } from './Sidebar';
 import { PromoBanner } from './PromoBanner';
 import { TopCards } from './TopCards';
-import { TopCardsMobile } from './TopCardsMobile';
 
 function ArticleSection({ section }: { section: ContentSection }) {
   return (
@@ -38,7 +37,6 @@ export function MainContent() {
     <div className="main-content">
       <div className="main-content__layout">
         <TopCards />
-        <TopCardsMobile />
         <div className="main-content__primary">
           <section className="rankings">
             {rankings.map((item) => (
